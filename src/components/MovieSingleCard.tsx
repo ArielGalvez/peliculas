@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { MovieType, SingleMovie } from "../services/api";
 import { Favorite } from "./Favorite";
 
 interface Props {
   movie?: SingleMovie;
+  handleFavorite: (movie: SingleMovie) => void;
 }
 
 export function MovieSingleCard(props: Props): React.ReactElement {
-  const { movie } = props;
+  const { movie, handleFavorite } = props;
+
+  const favorites = useMemo<SingleMovie[]>(
+    () =>
+      localStorage.getItem("favorites")
+        ? JSON.parse(localStorage.getItem("favorites") as string)
+        : [],
+    [localStorage]
+  );
 
   if (!movie) return <article>not found</article>;
 
@@ -20,18 +29,21 @@ export function MovieSingleCard(props: Props): React.ReactElement {
           src={movie.Poster}
           alt={movie.Title}
         />
+      </Link>
       <div className="p-2">
-          <h5 className="font-bold tracking-tight text-gray-900 dark:text-white truncate text-ellipsis">
-            {movie.Title}
-          </h5>
+        <h5 className="font-bold tracking-tight text-gray-900 dark:text-white truncate text-ellipsis">
+          {movie.Title}
+        </h5>
         <div className="flex w-full justify-between items-center">
           <p className="font-normal text-gray-700 dark:text-gray-400">
             {movie.Year}
           </p>
-          <Favorite cheked={false} />
+          <Favorite
+            cheked={favorites.some((f) => f.imdbID === movie.imdbID)}
+            onClick={() => handleFavorite(movie)}
+          />
         </div>
       </div>
-      </Link>
     </article>
   );
 }

@@ -11,7 +11,6 @@ export function Movie(props: Props): React.ReactElement {
   const { id } = useParams();
   const [movie, setMovie] = useState<MovieType>();
   // const { propName } = props;
-  console.log(id);
   useEffect(() => {
     if (id) {
       searchMovieById(id).then((res) => {

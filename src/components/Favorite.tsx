@@ -2,12 +2,13 @@ import React from "react";
 
 interface Props {
   cheked?: boolean;
+  onClick?: () => void;
 }
 
 export function Favorite(props: Props): React.ReactElement {
-  const { cheked } = props;
+  const { cheked, onClick } = props;
   return (
-    <button className="text-red-400 w-16">
+    <button className="text-red-400 w-16" onClick={onClick}>
       {!cheked ? (
         <svg
           stroke="currentColor"

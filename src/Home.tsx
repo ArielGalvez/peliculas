@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import { SingleMovie, searchByTerm } from "./services/api";
+import { MovieType, SingleMovie, searchByTerm } from "./services/api";
 import { MovieSingleCard } from "./components/MovieSingleCard";
 import Navbar from "./components/Navbar";
 
 export function Home(): React.ReactElement {
-  const [search, setSearch] = useState(
-    localStorage.getItem("search")
-       ||
-      ""
+  const [search, setSearch] = useState(localStorage.getItem("search") || "");
+  const [movies, setMovies] = useState<SingleMovie[]>(
+    localStorage.getItem("movies")
+      ? JSON.parse(localStorage.getItem("movies") as string)
+      : []
   );
-  const [movies, setMovies] = useState<SingleMovie[]>(localStorage.getItem("movies")
-  ? JSON.parse(localStorage.getItem("movies") as string)
-  : []);
   const [notFound, setNotFound] = useState("");
 
   const searchMovie = () => {
@@ -24,6 +22,22 @@ export function Home(): React.ReactElement {
         setNotFound("Not found results");
       }
     });
+  };
+
+  const handleFavorite = (movie: SingleMovie) => {
+    const oldFavorites: SingleMovie[] = localStorage.getItem("favorites")
+      ? JSON.parse(localStorage.getItem("favorites") as string)
+      : [];
+    const iHaveThis = oldFavorites.some((m) => m.imdbID === movie.imdbID);
+    if (iHaveThis) {
+      const filter = oldFavorites.filter((m) => m.imdbID !== movie.imdbID);
+      localStorage.setItem("favorites", JSON.stringify(filter));
+    } else {
+      localStorage.setItem(
+        "favorites",
+        JSON.stringify([...oldFavorites, movie])
+      );
+    }
   };
 
   return (
@@ -82,7 +96,11 @@ export function Home(): React.ReactElement {
         >
           {notFound && <p>{notFound}</p>}
           {movies.map((movie) => (
-            <MovieSingleCard key={movie.imdbID} movie={movie} />
+            <MovieSingleCard
+              key={movie.imdbID}
+              movie={movie}
+              handleFavorite={handleFavorite}
+            />
           ))}
         </ul>
       </section>
