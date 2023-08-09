@@ -22,15 +22,15 @@ export function MovieSingleCard(props: Props): React.ReactElement {
   if (!movie) return <article>not found</article>;
 
   return (
-    <article className=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <article className="relative bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <Link to={movie.imdbID}>
         <img
-          className="w-full aspect-[150/225] object-cover rounded-t-lg"
+          className="w-full aspect-[150/225] object-cover rounded-lg"
           src={movie.Poster}
           alt={movie.Title}
         />
       </Link>
-      <div className="p-2">
+      <div className="absolute rounded-b-lg p-2 w-full bottom-0 left-0 bg-white">
         <h5 className="font-bold tracking-tight text-gray-900 dark:text-white truncate text-ellipsis">
           {movie.Title}
         </h5>

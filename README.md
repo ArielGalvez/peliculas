@@ -1,18 +1,20 @@
 # Peliculas
-A technical interview about movies
+A technical interview about movies catalog
 
-# Demo
+## Demo
 [Peliculas Prueba](https://peliculas-prueba.netlify.app/)
 
-# Tech Stack
+## Tech Stack
 - React Vite
 - Tailwind + Flowbite
 
-# comands
+## Comands
+```
 npm i
 npm run dev
+```
 
-# instructions
+## Instructions
 Desafío
 Crea una aplicación de búsqueda de películas utilizando la API pública de OMDB (http://www.omdbapi.com/). La aplicación debe tener las siguientes funcionalidades:
 

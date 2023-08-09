@@ -47,7 +47,7 @@ export function Home(): React.ReactElement {
           <h1 className="font-bold">Wellcome to Master Movie Searcher</h1>
           <img src="/icon.svg" alt="logo" width={64} height={64} />
         </div>
-        <section className="w-60 mx-auto">
+        <section className="w-full max-w-sm mx-auto">
           <label
             htmlFor="default-search"
             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
